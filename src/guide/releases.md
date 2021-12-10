@@ -1,5 +1,50 @@
 # Releases
 
+## 0.48.6
+
+Released 2021-12-06
+
+### Bug Fixes
+---
+
+- Fixed a bug where deployments targeting an integration were getting deleted when updating to a different target type
+
+## 0.48.5
+
+Released 2021-12-03
+
+### Bug Fixes
+---
+
+- Fixed a bug where failed test scripts run after an install were not setting the action to non-compliant
+
+## 0.48.4
+
+Released 2021-12-03
+
+### Bug Fixes
+---
+
+- Fixed an issue with some ImmyBot instances not being able to run scheduled jobs
+- Fixed a bug with basic downloads failing because paths were using forward slashes instead of backslashes.  This was causing all license downloads to fail.
+
+## 0.48.3
+
+Released 2021-12-02
+
+### Improvements
+---
+
+- Added logout and switch user buttons to the landing page when you are signed in as an unauthorized user
+  
+![image](https://immybot.blob.core.windows.net/release-media/9ac4a8a6-3d2b-4518-9219-8407c32dd072)
+
+### Bug Fixes
+---
+
+- Fixed a bug where completed configuration tasks were incorrectly showing the message "Action interrupted"
+- Fixed a bug where providers failing to initialize were not getting disabled, causing them to continually throw exceptions
+
 ## 0.48.2
 
 Released 2021-12-01
