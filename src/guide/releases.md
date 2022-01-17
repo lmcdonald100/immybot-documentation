@@ -1,5 +1,112 @@
 # Releases
 
+## 0.49.0
+
+Released 2022-01-11
+
+### Improved Performance
+---
+In this release, codenamed "Cheetah" we achieved a __20x__ improvement in script execution performance through the use of WebSockets, Named Pipes, and removing code that is no longer necessary since the introduction of the Ephemeral Agent.
+
+We also made restarting machines faster by using the new event driven Wait-ImmyComputer cmdlet when waiting for computers to reconnect after a reboot.
+
+### Apply on Connect
+---
+#### Problem to solve
+
+Computers that are offline never receive maintenance. These computers need a way to update when they miss their maintenance window.
+
+#### Solution
+
+You can now specify the offline behavior for computers on schedules and ad-hoc deployments.
+
+![image](https://immybot.blob.core.windows.net/release-media/a720eb9f-74b7-4a9d-935e-4fb0cbe6ace1)
+
+When offline behavior is set to `Apply On Connect`, a session will get marked as ![image](https://immybot.blob.core.windows.net/release-media/5df28983-4e9d-455c-b1b3-21a8638b6e6a) when the device is offline. When the device comes online, the session will resume.
+
+![image](https://immybot.blob.core.windows.net/release-media/e6b38fd2-0370-4e09-b75d-527867cfeedd)
+
+Since devices can come online at anytime, the option to `Suppress Reboots During Business Hours` is checked by default.
+
+If a device is offline before the detection stage, then it will run the detection stage when it comes online.
+
+If a device is offline before the execution stage, then it will only run the execution stage when it comes online.  It will not re-run detection.
+
+Maintenance emails are only sent out once regardless if the device goes offline.
+
+### Timeline
+---
+
+On the computer details overview tab, there is now a section called Timeline that
+shows particular events that have occurred for the computer.
+
+![image](https://immybot.blob.core.windows.net/release-media/90b4b265-8744-44cb-b3ce-47c2bd6ec0e0)
+
+The events we are currently showing are:
+
+1. Agent disconnected
+1. Agent connected
+1. Maintenance action started (only shows if the action required execution)
+1. Maintenance action completed (only shows if the action required execution)
+
+More events will be added in the future.
+
+### Other Improvements
+---
+
+- Improved performance of determining desired state of deployments during maintenance
+- Improved performance of some update queries
+- Added a new metascript cmdlet `Wait-ImmyComputer` that returns as soon as a computer has connectivity
+- Added & Updated Ephemeral Agent connection statistics in 'System Status' page to report data/data-rate metrics about the underlying Ephemeral Agent connection to the backend
+
+### Bug Fixes
+---
+
+- Fixed an issue where software download scripts were timing out after 60 seconds if the script didn't specify its own timeout
+- Fixed an issue where changes made to a configuration task parameters from the software page were not saving
+- Fixed issues displaying incorrect text in the target type column on the deployment and schedule list pages
+- Fixed a bug where you could not remove a software download script
+- Fixed a bug with `Add-UriQueryParameter` where it did not accept array values or parse existing parameters
+- Fixed an issue with Ephemeral Agent "end-of-stream" response exceptions resulting in termination of stage
+- Fixed various issues with agent connection events and improved performance
+- Fixed an issue where immy agent registrations could cause resource depletion in the backend's IoT service
+- Fixed the timezone selector to show the region to differentiate the options
+- Fixed a bug where dynamic versions could depend on itself and cause an infinite loop
+
+## 0.48.7
+
+Released 2021-12-10
+
+### Access Requests 
+---
+
+Your users and the ImmyBot support team can now request access to your instance! When an unauthorized person authenticates, a "Request Access" button is available that will submit an access request.  An MSP user can then grant or deny access from the user list page.  An expiration of one hour, one day, or never can be set for the user.
+
+The access request feature can be enabled/disabled on the preferences page.
+
+![image](https://immybot.blob.core.windows.net/release-media/bb34184f-c7c3-41cf-9fa3-f6489e6c3600)
+
+### Improvements
+---
+
+- Made some small improvements to the User list page
+- Added auto refreshing to the new computers page
+- Made the session list on the computer details page reload when it is shown
+
+### Bug Fixes
+---
+
+- Removed some extra whitespace showing on the tenant details page
+- Fixed a bug when using custom download scripts where the action would fail with `An item with the same key has already been added`
+- Changed "Triggered By" text from "Unknown" to "System - Automatic Onboarding" for maintenance sessions that onboard automatically
+- Changed parameter text from "override" to "specify" when a default valued is not specified
+- Fixed a bug where deployment parameter notes were not honoring line breaks
+- Changed the default target filter from `No Filter` to `Workstations and Portable Devices`
+- Fixed an error in metascripts, `Tee-Output : Cannot bind argument...`, that would occur if you ran the script `$null`, which should return null
+- Fixed a browser caching issue which would cause new features and bug fixes to not be immediately available when updating ImmyBot
+- Fixed an issue where the end time of the ImmyBot agent update action was not getting set, causing the time running to continually increase
+- Fixed an issue with the ImmyBot Chocolatey Feed app preference not updating when toggled
+
 ## 0.48.6
 
 Released 2021-12-06
